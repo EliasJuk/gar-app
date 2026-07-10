@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../models/local_user.dart';
 import '../widgets/bottom_menu.dart';
+import 'avisos_page.dart';
+import 'checkout_page.dart';
+import 'gatos_page.dart';
+import 'medicacao_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final LocalUser user;
 
   const HomePage({
@@ -13,27 +17,84 @@ class HomePage extends StatelessWidget {
   });
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
+
+  void selectPage(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  void returnToAvisos() {
+    setState(() {
+      selectedIndex = 0;
+    });
+  }
+
+  String get pageTitle {
+    switch (selectedIndex) {
+      case 1:
+        return 'Gatos';
+      case 2:
+        return 'Check-out';
+      case 3:
+        return 'Medicação';
+      default:
+        return 'Avisos';
+    }
+  }
+
+  Widget get currentPage {
+    switch (selectedIndex) {
+      case 1:
+        return const GatosPage();
+      case 2:
+        return const CheckoutPage();
+      case 3:
+        return const MedicacaoPage();
+      default:
+        return AvisosPage(user: widget.user);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: GarColors.background,
       appBar: AppBar(
-        title: const Text('GAR App'),
         backgroundColor: GarColors.primary,
         foregroundColor: Colors.white,
-      ),
-
-      body: Center(
-        child: Text(
-          'Olá, ${user.name}!\nPerfil: ${user.isAdmin ? 'Admin' : 'Voluntário'}',
-          textAlign: TextAlign.center,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: selectedIndex == 0
+            ? null
+            : IconButton(
+                tooltip: 'Voltar para avisos',
+                icon: const Icon(Icons.arrow_back),
+                onPressed: returnToAvisos,
+              ),
+        title: Text(
+          pageTitle,
           style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            color: GarColors.textDark,
+            fontWeight: FontWeight.w800,
           ),
         ),
       ),
-
-      bottomNavigationBar: const BottomMenu(),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 220),
+        child: KeyedSubtree(
+          key: ValueKey(selectedIndex),
+          child: currentPage,
+        ),
+      ),
+      bottomNavigationBar: BottomMenu(
+        selectedIndex: selectedIndex,
+        onItemSelected: selectPage,
+      ),
     );
   }
 }
