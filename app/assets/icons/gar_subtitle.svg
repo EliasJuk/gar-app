@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="512" viewBox="0 0 2048 512" fill="none">
+  <defs>
+    <style>
+      .subtitle {
+        fill: #FFFFFF;
+        font-family: "Nunito", "Quicksand", "Arial Rounded MT Bold", "Segoe UI", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+    </style>
+  </defs>
+  <text x="512" y="220" class="subtitle" font-size="118">grupo de auxílio</text>
+  <text x="512" y="385" class="subtitle" font-size="118">aos resgatinhos</text>
+</svg>
