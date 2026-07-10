@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../main.dart';
 import '../models/local_user.dart';
+import '../widgets/bottom_menu.dart';
 
 class HomePage extends StatelessWidget {
   final LocalUser user;
@@ -19,10 +20,10 @@ class HomePage extends StatelessWidget {
         backgroundColor: GarColors.primary,
         foregroundColor: Colors.white,
       ),
+
       body: Center(
         child: Text(
-          'Olá, ${user.name}!\n'
-          'Perfil: ${user.isAdmin ? 'Admin' : 'Voluntário'}',
+          'Olá, ${user.name}!\nPerfil: ${user.isAdmin ? 'Admin' : 'Voluntário'}',
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 22,
@@ -31,6 +32,8 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+
+      bottomNavigationBar: const BottomMenu(),
     );
   }
 }
